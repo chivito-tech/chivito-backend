@@ -32,15 +32,24 @@ class UserController extends Controller
             'password' => 'required|string',
             'phone_number' => "nullable|string|max:19",
             'photo' => 'nullable|string',
-
         ]);
 
         if ($validatedRequest->fails()) {
             return response()->json(['errors' => $validatedRequest->errors()], 422);
         }
 
-        $user = User::create($validatedRequest->validated());
+        $data = $validatedRequest->validated();
+        $data['password'] = Hash::make($data['password']);
 
-        return response()->json(['status' => true, 'data' => $user]);
+        $user = User::create($data);
+
+        // Create token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'status' => true,
+            'data' => $user,
+            'token' => $token
+        ]);
     }
 }
