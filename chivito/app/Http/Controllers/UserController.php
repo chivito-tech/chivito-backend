@@ -52,4 +52,15 @@ class UserController extends Controller
             'token' => $token
         ]);
     }
+
+
+
+public function profile(Request $request)
+{
+    return response()->json([
+        'status' => true,
+        'data' => $request->user() // returns authenticated user
+    ]);
+}
+
 }

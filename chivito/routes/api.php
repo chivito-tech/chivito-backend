@@ -10,4 +10,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers', [UserController::class, 'getAllCustomers']);
+    Route::get('/profile', [UserController::class, 'profile']);
+
 });
