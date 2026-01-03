@@ -36,7 +36,7 @@ class ProviderController extends Controller
             'bio' => $validated['bio'] ?? null,
             'city' => $validated['city'] ?? null,
             'zip' => $validated['zip'] ?? null,
-            'status' => 'pending',
+            'status' => 'approved',
         ]);
 
         $categoryIds = $validated['category_ids'] ?? [];
