@@ -12,6 +12,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::apiResource('categories', CategoryController::class)->only(['index', 'store', 'show']);
 Route::apiResource('providers', ProviderController::class)->only(['index', 'store', 'show']);
+Route::delete('/providers', [ProviderController::class, 'destroyAll']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers', [UserController::class, 'getAllCustomers']);
