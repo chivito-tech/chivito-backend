@@ -17,6 +17,7 @@ class Provider extends Model
         'city',
         'zip',
         'status',
+        'price',
     ];
 
     public function categories()

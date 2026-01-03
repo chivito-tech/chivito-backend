@@ -23,6 +23,7 @@ class ProviderController extends Controller
             'bio' => ['nullable', 'string'],
             'city' => ['nullable', 'string', 'max:255'],
             'zip' => ['nullable', 'string', 'max:255'],
+            'price' => ['nullable', 'numeric', 'min:0'],
             'category_ids' => ['required_without:category_slugs', 'array', 'min:1'],
             'category_ids.*' => ['integer', 'exists:categories,id'],
             'category_slugs' => ['required_without:category_ids', 'array', 'min:1'],
@@ -36,6 +37,7 @@ class ProviderController extends Controller
             'bio' => $validated['bio'] ?? null,
             'city' => $validated['city'] ?? null,
             'zip' => $validated['zip'] ?? null,
+            'price' => $validated['price'] ?? null,
             'status' => 'approved',
         ]);
 
