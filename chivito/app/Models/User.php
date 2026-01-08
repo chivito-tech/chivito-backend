@@ -55,4 +55,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Provider::class);
     }
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Provider::class, 'provider_user_bookmarks')
+            ->withTimestamps();
+    }
 }

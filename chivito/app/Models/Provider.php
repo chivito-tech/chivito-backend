@@ -33,4 +33,10 @@ class Provider extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function bookmarkedBy()
+    {
+        return $this->belongsToMany(User::class, 'provider_user_bookmarks')
+            ->withTimestamps();
+    }
 }
