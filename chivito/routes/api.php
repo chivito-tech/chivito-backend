@@ -11,9 +11,10 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::apiResource('categories', CategoryController::class)->only(['index', 'store', 'show']);
-Route::apiResource('providers', ProviderController::class)->only(['index', 'store', 'show']);
-Route::delete('/providers', [ProviderController::class, 'destroyAll']);
+Route::apiResource('providers', ProviderController::class)->only(['index', 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers', [UserController::class, 'getAllCustomers']);
+    Route::apiResource('providers', ProviderController::class)->only(['store', 'update', 'destroy']);
+    Route::delete('/providers', [ProviderController::class, 'destroyAll']);
 });

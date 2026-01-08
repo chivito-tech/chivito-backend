@@ -10,6 +10,7 @@ class Provider extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'company_name',
         'phone',
@@ -26,5 +27,10 @@ class Provider extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'provider_category');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

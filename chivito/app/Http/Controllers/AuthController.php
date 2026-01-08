@@ -17,11 +17,13 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             'id' => $user->id,
             'name' => $user->first_name . ' ' . $user->last_name,
             'email' => $user->email,
             'photo' => $user->photo ?? null,
+            'token' => $token,
         ]);
     }
 }
