@@ -15,6 +15,7 @@ Route::apiResource('providers', ProviderController::class)->only(['index', 'show
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers', [UserController::class, 'getAllCustomers']);
+    Route::get('/my-providers', [ProviderController::class, 'myProviders']);
     Route::apiResource('providers', ProviderController::class)->only(['store', 'update', 'destroy']);
     Route::delete('/providers', [ProviderController::class, 'destroyAll']);
 });

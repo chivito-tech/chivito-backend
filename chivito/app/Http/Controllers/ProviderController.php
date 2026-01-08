@@ -12,7 +12,18 @@ class ProviderController extends Controller
 {
     public function index()
     {
-        return Provider::with('categories')->latest()->get();
+        return Provider::with('categories')
+            ->where('status', '!=', 'inactive')
+            ->latest()
+            ->get();
+    }
+
+    public function myProviders(Request $request)
+    {
+        return Provider::with('categories')
+            ->where('user_id', $request->user()->id)
+            ->latest()
+            ->get();
     }
 
     public function store(Request $request)
@@ -116,6 +127,7 @@ class ProviderController extends Controller
             'category_ids.*' => ['integer', 'exists:categories,id'],
             'category_slugs' => ['nullable', 'array', 'min:1'],
             'category_slugs.*' => ['string', 'exists:categories,slug'],
+            'status' => ['nullable', Rule::in(['approved', 'pending', 'inactive'])],
         ]);
 
         $provider->fill([
@@ -126,6 +138,7 @@ class ProviderController extends Controller
             'city' => $validated['city'] ?? $provider->city,
             'zip' => $validated['zip'] ?? $provider->zip,
             'price' => $validated['price'] ?? $provider->price,
+            'status' => $validated['status'] ?? $provider->status,
         ]);
 
         if (!empty($validated['photos']) && is_array($validated['photos'])) {
