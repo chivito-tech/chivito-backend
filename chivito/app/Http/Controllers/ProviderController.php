@@ -36,6 +36,7 @@ class ProviderController extends Controller
             'city' => ['nullable', 'string', 'max:255'],
             'zip' => ['nullable', 'string', 'max:255'],
             'price' => ['nullable', 'numeric', 'min:0'],
+            'tags' => ['nullable', 'string', 'max:255'],
             'photos' => ['nullable', 'array', 'max:3'],
             'photos.*' => ['image', 'max:2048'],
             'category_ids' => ['required_without:category_slugs', 'array', 'min:1'],
@@ -53,6 +54,7 @@ class ProviderController extends Controller
             'city' => $validated['city'] ?? null,
             'zip' => $validated['zip'] ?? null,
             'price' => $validated['price'] ?? null,
+            'tags' => $validated['tags'] ?? null,
             'status' => 'approved',
         ]);
 
@@ -121,6 +123,7 @@ class ProviderController extends Controller
             'city' => ['nullable', 'string', 'max:255'],
             'zip' => ['nullable', 'string', 'max:255'],
             'price' => ['nullable', 'numeric', 'min:0'],
+            'tags' => ['nullable', 'string', 'max:255'],
             'photos' => ['nullable', 'array', 'max:3'],
             'photos.*' => ['image', 'max:2048'],
             'category_ids' => ['nullable', 'array', 'min:1'],
@@ -138,6 +141,7 @@ class ProviderController extends Controller
             'city' => $validated['city'] ?? $provider->city,
             'zip' => $validated['zip'] ?? $provider->zip,
             'price' => $validated['price'] ?? $provider->price,
+            'tags' => $validated['tags'] ?? $provider->tags,
             'status' => $validated['status'] ?? $provider->status,
         ]);
 

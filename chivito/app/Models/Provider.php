@@ -19,6 +19,7 @@ class Provider extends Model
         'zip',
         'status',
         'price',
+        'tags',
         'photo1',
         'photo2',
         'photo3',
