@@ -6,12 +6,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\SubcategoryController;
 
 Route::post('/createCustomer', [UserController::class, 'create']);
 Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::apiResource('categories', CategoryController::class)->only(['index', 'store', 'show']);
+Route::get('/subcategories', [SubcategoryController::class, 'index']);
 Route::apiResource('providers', ProviderController::class)->only(['index', 'show']);
 Route::delete('/providers', [ProviderController::class, 'destroyAll']);
 Route::middleware('auth:sanctum')->group(function () {

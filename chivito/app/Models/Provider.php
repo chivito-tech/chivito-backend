@@ -29,6 +29,11 @@ class Provider extends Model
         return $this->belongsToMany(Category::class, 'provider_category');
     }
 
+    public function subcategories()
+    {
+        return $this->belongsToMany(Subcategory::class, 'provider_subcategory');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

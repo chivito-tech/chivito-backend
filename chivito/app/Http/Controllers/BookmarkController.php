@@ -11,7 +11,7 @@ class BookmarkController extends Controller
     {
         return $request->user()
             ->bookmarks()
-            ->with('categories')
+            ->with(['categories', 'subcategories'])
             ->latest()
             ->get();
     }
