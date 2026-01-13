@@ -10,7 +10,7 @@
 ### Setup
 1) Install PHP dependencies
 ```bash
-composer install
+composer install    
 ```
 
 2) Configure environment
