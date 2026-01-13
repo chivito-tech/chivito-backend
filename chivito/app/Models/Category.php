@@ -18,4 +18,9 @@ class Category extends Model
     {
         return $this->belongsToMany(Provider::class, 'provider_category');
     }
+
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
 }

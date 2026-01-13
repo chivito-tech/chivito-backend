@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 
 class UserController extends Controller
@@ -51,5 +52,37 @@ class UserController extends Controller
             'data' => $user,
             'token' => $token
         ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+        $validated = $request->validate([
+            'first_name' => ['sometimes', 'string', 'max:255'],
+            'last_name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'phone_number' => ['nullable', 'string', 'max:19'],
+            'photo' => ['nullable', 'image', 'max:2048'],
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('profiles', 'public');
+            $validated['photo'] = Storage::url($path);
+        } else {
+            unset($validated['photo']);
+        }
+
+        $user->update($validated);
+
+        return response()->json($user);
+    }
+
+    public function destroySelf(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->json(['message' => 'Account deleted'], 200);
     }
 }
