@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+use App\Mail\WelcomeMagicLink;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -47,11 +50,29 @@ class UserController extends Controller
         // Create token
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        $magicUrl = URL::temporarySignedRoute(
+            'magic-login',
+            now()->addMinutes(60),
+            ['user' => $user->id]
+        );
+
+        $frontendUrl = rtrim(env('APP_FRONTEND_URL', 'http://localhost:3000'), '/');
+        $redirectUrl = $frontendUrl . '/magic?link=' . urlencode($magicUrl);
+
+        Mail::to($user->email)->send(
+            new WelcomeMagicLink($redirectUrl, $user->first_name)
+        );
+
         return response()->json([
             'status' => true,
             'data' => $user,
             'token' => $token
         ]);
+    }
+
+    public function me(Request $request)
+    {
+        return response()->json($request->user());
     }
 
     public function updateProfile(Request $request)

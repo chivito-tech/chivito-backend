@@ -43,6 +43,31 @@ The API will be available at `http://127.0.0.1:8002/api`.
 - If you change the API port or host, update the frontend env at `chivito-frontend/chivito-frontend/.env.local`.
 - File uploads are stored in `storage/app/public` and exposed via `/storage` after running `storage:link`.
 
+## Welcome Email + Magic Link
+
+When a user registers, the API sends a welcome email with a magic link. The link:
+- redirects to the frontend `/magic` page
+- signs the user in automatically
+
+### Required env
+Add the frontend URL to your backend `.env`:
+```bash
+APP_FRONTEND_URL=http://localhost:3000
+```
+
+### Mail setup
+By default, mail uses the log driver. To send real emails, configure SMTP in `.env`:
+```bash
+MAIL_MAILER=smtp
+MAIL_HOST=your-smtp-host
+MAIL_PORT=587
+MAIL_USERNAME=your-user
+MAIL_PASSWORD=your-pass
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="hello@yourdomain.com"
+MAIL_FROM_NAME="Brega"
+```
+
 ### Troubleshooting
 - `SQLSTATE[HY000]`: check your database credentials in `.env`.
 - `No application encryption key`: run `php artisan key:generate`.
