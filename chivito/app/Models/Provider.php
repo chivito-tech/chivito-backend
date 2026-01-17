@@ -34,6 +34,11 @@ class Provider extends Model
         return $this->belongsToMany(Subcategory::class, 'provider_subcategory');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

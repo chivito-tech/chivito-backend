@@ -8,6 +8,7 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\MagicLinkController;
+use App\Http\Controllers\ReviewController;
 
 Route::post('/createCustomer', [UserController::class, 'create'])->middleware('throttle:10,1');
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
@@ -19,6 +20,7 @@ Route::get('/magic-login', [MagicLinkController::class, 'login'])->middleware('t
 Route::apiResource('categories', CategoryController::class)->only(['index', 'store', 'show']);
 Route::get('/subcategories', [SubcategoryController::class, 'index']);
 Route::apiResource('providers', ProviderController::class)->only(['index', 'show']);
+Route::get('/providers/{provider}/reviews', [ReviewController::class, 'index']);
 Route::delete('/providers', [ProviderController::class, 'destroyAll']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers', [UserController::class, 'getAllCustomers']);
@@ -32,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bookmarks/{provider}', [BookmarkController::class, 'store']);
     Route::delete('/bookmarks/{provider}', [BookmarkController::class, 'destroy']);
     Route::apiResource('providers', ProviderController::class)->only(['store', 'update', 'destroy']);
+    Route::post('/providers/{provider}/reviews', [ReviewController::class, 'store']);
     Route::post('/subcategories', [SubcategoryController::class, 'store']);
     Route::put('/subcategories/{subcategory}', [SubcategoryController::class, 'update']);
     Route::delete('/subcategories/{subcategory}', [SubcategoryController::class, 'destroy']);

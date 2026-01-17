@@ -13,7 +13,7 @@ class ProviderController extends Controller
 {
     public function index()
     {
-        return Provider::with(['categories', 'subcategories'])
+        return Provider::with(['categories', 'subcategories', 'reviews'])
             ->where('status', '!=', 'inactive')
             ->latest()
             ->get();
@@ -21,7 +21,7 @@ class ProviderController extends Controller
 
     public function myProviders(Request $request)
     {
-        return Provider::with(['categories', 'subcategories'])
+        return Provider::with(['categories', 'subcategories', 'reviews'])
             ->where('user_id', $request->user()->id)
             ->latest()
             ->get();
@@ -111,12 +111,12 @@ class ProviderController extends Controller
             $provider->subcategories()->sync($validated['subcategory_ids']);
         }
 
-        return response()->json($provider->load(['categories', 'subcategories']), 201);
+        return response()->json($provider->load(['categories', 'subcategories', 'reviews']), 201);
     }
 
     public function show(Provider $provider)
     {
-        return $provider->load(['categories', 'subcategories']);
+        return $provider->load(['categories', 'subcategories', 'reviews.user']);
     }
 
     public function update(Request $request, Provider $provider)
@@ -213,7 +213,7 @@ class ProviderController extends Controller
             $provider->subcategories()->sync([]);
         }
 
-        return response()->json($provider->load(['categories', 'subcategories']));
+        return response()->json($provider->load(['categories', 'subcategories', 'reviews']));
     }
 
     public function destroy(Request $request, Provider $provider)
